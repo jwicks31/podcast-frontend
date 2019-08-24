@@ -9,7 +9,7 @@ export const Marker = ({
   content,
   link
 }) => (
-  <span>
+  <React.Fragment>
     {type === IMAGE && (
       <img
         className="marker image"
@@ -25,12 +25,17 @@ export const Marker = ({
     <style jsx>{`
       .marker {
         color: white;
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
       }
       .image {
+        align-self: center;
         height: 50px;
         width: 50px;
       }
     `}</style>
-  </span>
+  </React.Fragment>
 );
   

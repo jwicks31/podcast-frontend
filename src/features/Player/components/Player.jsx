@@ -42,7 +42,6 @@ export const Player = ({
         :global(.slider-horizontal) {
           background: #fac134 !important;
           margin: 25px 10px;
-          max-width: 50vw;
         }
         :global(.slider-bar) {
           background: #fac134 !important;

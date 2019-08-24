@@ -18,7 +18,7 @@ const Episode = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <Nav />
       {episode && (
         <Player
@@ -29,10 +29,15 @@ const Episode = () => {
       )}
       <style jsx>{`
         :global(body) {
-          margin: 0;
           font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
             Helvetica, sans-serif;
           background-color: #0f1113;
+        }
+
+        .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
       `}</style>
     </div>

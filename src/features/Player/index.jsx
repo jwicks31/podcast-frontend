@@ -71,7 +71,8 @@ export const Player = ({ audio, markers, name }) => {
   return (
     <div className="container">
       <h1>{name}</h1>
-      {currentMarker.content && (
+      {!currentMarker.content && <span className={'content-placeholder'} />}
+      {!!currentMarker.content && (
         <Marker
           content={currentMarker.content}
           type={currentMarker.type}
@@ -107,15 +108,15 @@ export const Player = ({ audio, markers, name }) => {
         }
         .container {
           display: flex;
+          width: 50vw;
           flex-direction: column;
-        }
-        .button-container {
-          width: 100px;
-          display: flex;
-          flex-direction: row;
         }
         h1 {
           color: white;
+          text-align: center;
+        }
+        .content-placeholder {
+          height: 50px;
         }
       `}</style>
     </div>
