@@ -14,8 +14,8 @@ const Episode = () => {
       const result = await axios(`http://localhost:1337/episodes/${id}`);
       setEpisode(result.data);
     };
-    fetchEpisode();
-  }, []);
+    if (!!id) fetchEpisode();
+  }, [id]);
 
   return (
     <div className="container">
