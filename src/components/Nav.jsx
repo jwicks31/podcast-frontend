@@ -1,5 +1,5 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
 const Nav = ({ episodes = [] }) => (
   <nav>
@@ -47,4 +47,4 @@ const Nav = ({ episodes = [] }) => (
   </nav>
 );
 
-export default Nav
+export default Nav;

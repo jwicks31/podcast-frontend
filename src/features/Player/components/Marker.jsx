@@ -4,17 +4,10 @@ const IMAGE = 'image';
 const TEXT = 'text';
 const AD = 'ad';
 
-export const Marker = ({
-  type,
-  content,
-  link
-}) => (
+export const Marker = ({ type, content, link }) => (
   <React.Fragment>
     {type === IMAGE && (
-      <img
-        className="marker image"
-        src={`http://localhost:1337${content}`}
-      />
+      <img className="marker image" src={`http://localhost:1337${content}`} />
     )}
     {type === TEXT && <div className="marker">{content}</div>}
     {type === AD && (
@@ -38,4 +31,3 @@ export const Marker = ({
     `}</style>
   </React.Fragment>
 );
-  

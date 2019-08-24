@@ -12,16 +12,18 @@ const PAUSED = 'paused';
 const isBetween = (start, duration, currentTime) =>
   start <= currentTime && start + duration >= currentTime;
 
-const hasCurrentMarker = (markers, currentTime) =>
-  markers.some(marker => {
+const getCurrentMarker = (markers, currentTime) =>
+  markers.filter(marker => {
     return isBetween(marker.start, marker.duration, currentTime);
-  });
+  })[0];
 
 export const Player = ({ audio, markers, name }) => {
   const [currentTime, setCurrentTime] = useState(0);
+  const [requestedTime, setRequestedTime] = useState(null);
   const [duration, setDuration] = useState(0);
   const [playerState, setPlayerState] = useState(STOPPED);
   const [currentMarker, setCurrentMarker] = useState({});
+
   const player = useRef(null);
 
   useEffect(() => {
@@ -33,23 +35,37 @@ export const Player = ({ audio, markers, name }) => {
   }, [player, setCurrentTime, setDuration]);
 
   useEffect(() => {
-    const noMarker = !hasCurrentMarker(markers, currentTime);
-    if (noMarker) return setCurrentMarker({});
-
-    markers.forEach(marker => {
-      if (isBetween(marker.start, marker.duration, currentTime)) {
-        if (currentMarker.content !== marker.content) {
-          setCurrentMarker(marker);
+    const marker = getCurrentMarker(markers, currentTime);
+    if (!!requestedTime && requestedTime <= currentTime) {
+      setRequestedTime(null);
+    }
+    if (!!marker) {
+      if (currentMarker.content !== marker.content) {
+        if (!!requestedTime) {
+          onTimeChange(requestedTime, true);
+          return setRequestedTime(null);
         }
+        return setCurrentMarker(marker);
       }
-    });
-  }, [currentTime, setCurrentMarker]);
+    }
+    if (!marker) return setCurrentMarker({});
+  }, [currentTime, markers, setCurrentMarker, setRequestedTime, onTimeChange]);
 
-  const onTimeChange = value => player.current.currentTime = value;
+  const onTimeChange = (value, skipCheck) => {
+    if (
+      !skipCheck &&
+      isBetween(currentMarker.start, currentMarker.duration, currentTime) &&
+      value > currentTime
+    ) {
+      return setRequestedTime(value);
+    }
+    player.current.currentTime = value;
+  };
 
   const rewindClick = e => {
     e.preventDefault();
-    onTimeChange(currentTime - 5);
+    if (!!requestedTime) setRequestedTime(null);
+    onTimeChange(currentTime - 5, true);
   };
 
   const playClick = e => {

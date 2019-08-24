@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
-import Nav from '../src/components/Nav'
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import Nav from '../src/components/Nav';
 import { Player } from '../src/features/Player';
 import axios from 'axios';
 
@@ -9,9 +9,7 @@ const Home = () => {
   const [episodes, setEpisodes] = useState([]);
   useEffect(() => {
     const fetchEpisodes = async () => {
-      const result = await axios(
-        'http://localhost:1337/episodes',
-      );
+      const result = await axios('http://localhost:1337/episodes');
       setEpisodes(result.data);
     };
     fetchEpisodes();
@@ -36,4 +34,4 @@ const Home = () => {
   );
 };
 
-export default Home
+export default Home;
